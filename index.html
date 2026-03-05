@@ -14,6 +14,7 @@
             border: 2px solid #3b82f6;
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
             animation: pulse-soft 2s infinite ease-in-out;
+            background-color: white !important;
         }
         .console-text {
             font-family: 'Courier New', Courier, monospace;
@@ -38,134 +39,190 @@
         .progress-bar {
             transition: width 0.5s ease-in-out;
         }
+        
+        /* Medical Image Processing Transition */
+        .sample-slice-container {
+            transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            filter: blur(5px) contrast(0.7) brightness(0.6);
+            background: #000;
+        }
+        .sample-slice-container.crisp {
+            filter: blur(0px) contrast(1.2) brightness(1.1);
+        }
+
+        .nodule-glow {
+            filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.8));
+        }
+
+        /* Strict No-Scroll Rules */
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        /* Utility to hide scrollbars */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 p-4 md:p-8">
+<body class="text-slate-800 p-4 flex flex-col items-center justify-center">
 
-    <div class="max-w-6xl mx-auto">
-        <!-- Header -->
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-900">Conceptual Framework Simulator</h1>
-            <p class="text-slate-500 mt-2">CT Standardization and AI-Based Lung Cancer Prediction Pipeline</p>
+    <div class="flex flex-col w-full max-w-7xl space-y-4">
+        <!-- Header: Fixed height -->
+        <header class="text-center flex-shrink-0 border-b border-slate-200 pb-2">
+            <h1 class="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">Conceptual Framework for CT Standardization</h1>
+            <p class="text-slate-500 text-[10px] md:text-xs mt-0.5 italic">AI-Based Lung Cancer Prediction Pipeline</p>
         </header>
 
-        <!-- Main Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-8">
-            <!-- Input Layer -->
-            <div id="stage-1" class="bg-blue-50 p-4 rounded-xl border border-blue-100 transition-all duration-500">
-                <div class="text-xs font-bold text-blue-600 uppercase mb-2">Input Layer</div>
-                <div class="font-semibold text-sm mb-3">Heterogeneous CT Data</div>
-                <div class="space-y-2 opacity-80">
-                    <div class="bg-white p-2 rounded text-[10px] border border-blue-200">🏥 Hospital A (Siemens)</div>
-                    <div class="bg-white p-2 rounded text-[10px] border border-blue-200">🏥 Hospital B (GE)</div>
-                    <div class="bg-white p-2 rounded text-[10px] border border-blue-200">🏥 Clinic C (Philips)</div>
+        <!-- Main Framework Pipeline -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 flex-shrink-0">
+            
+            <!-- Stage 1 -->
+            <div id="stage-1" class="bg-blue-50/70 p-3 rounded-2xl border border-blue-100 transition-all duration-500 flex flex-col justify-center h-32 md:h-36">
+                <div class="text-[9px] font-bold text-blue-600 uppercase mb-1">Input Layer</div>
+                <div class="font-bold text-xs mb-2 text-slate-800">Heterogeneous CT Data</div>
+                <div class="space-y-1 flex flex-col">
+                    <div class="flex items-center space-x-2 bg-white/60 p-1.5 rounded-lg border border-blue-100">
+                        <span class="text-xs">🏥</span>
+                        <div class="text-[9px] font-medium text-slate-600">Scanner Variance</div>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-white/60 p-1.5 rounded-lg border border-blue-100">
+                        <span class="text-xs">📄</span>
+                        <div class="text-[9px] font-medium text-slate-600">Protocol Diff.</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Preprocessing Layer -->
-            <div id="stage-2" class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 transition-all duration-500">
-                <div class="text-xs font-bold text-emerald-600 uppercase mb-2">Preprocessing</div>
-                <div class="font-semibold text-sm mb-3">Standardization</div>
-                <div class="flex flex-col items-center justify-center h-24 space-y-2">
-                    <div id="standard-icon" class="text-2xl">🔄</div>
-                    <div class="text-[10px] text-emerald-700 text-center">Harmonization & Normalization</div>
+            <!-- Stage 2 -->
+            <div id="stage-2" class="bg-emerald-50/70 p-3 rounded-2xl border border-emerald-100 transition-all duration-500 text-center flex flex-col justify-center h-32 md:h-36">
+                <div class="text-[9px] font-bold text-emerald-600 uppercase mb-1 text-left">Preprocessing Layer</div>
+                <div class="font-bold text-xs mb-1 text-slate-800 text-left">Image Standardization</div>
+                <div class="flex-1 flex flex-col items-center justify-center">
+                    <div class="relative w-16 h-16 bg-black rounded-xl overflow-hidden border-2 border-slate-800 shadow-xl">
+                        <div id="visual-slice" class="sample-slice-container w-full h-full flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-14 h-14">
+                                <rect width="100" height="100" fill="#000" />
+                                <ellipse cx="50" cy="50" rx="46" ry="40" fill="#222" stroke="#333" stroke-width="0.5" />
+                                <g transform="translate(50, 82)">
+                                    <path d="M-9,-3 L9,-3 L11,8 L-11,8 Z" fill="#fff" />
+                                    <circle cx="0" cy="1" r="3.5" fill="#000" />
+                                </g>
+                                <g stroke="#ddd" stroke-width="1.2" opacity="0.6">
+                                    <path d="M12 35 Q 8 50 12 65" fill="none" />
+                                    <path d="M88 35 Q 92 50 88 65" fill="none" />
+                                </g>
+                                <path d="M46 18 C 25 15, 10 35, 10 55 C 10 75, 25 80, 44 72 C 46 65, 46 40, 46 18" fill="#080808" />
+                                <path d="M54 18 C 75 15, 90 35, 90 55 C 90 75, 75 80, 56 72 C 54 65, 54 40, 54 18" fill="#080808" />
+                                <g stroke="#666" stroke-width="0.5" opacity="0.8">
+                                    <path d="M40 30 L 25 25" /> <path d="M40 50 L 20 55" />
+                                    <path d="M60 30 L 75 25" /> <path d="M60 50 L 80 55" />
+                                </g>
+                                <circle id="nodule" cx="28" cy="42" r="2.2" fill="#ef4444" class="nodule-glow animate-pulse" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Feature Learning Layer -->
-            <div id="stage-3" class="bg-amber-50 p-4 rounded-xl border border-amber-100 transition-all duration-500">
-                <div class="text-xs font-bold text-amber-600 uppercase mb-2">Feature Learning</div>
-                <div class="font-semibold text-sm mb-3">Deep Representation</div>
-                <div class="flex justify-center items-center h-24">
-                    <svg id="nn-viz" width="120" height="80" viewBox="0 0 120 80">
-                        <!-- Simplified NN structure -->
+            <!-- Stage 3 -->
+            <div id="stage-3" class="bg-amber-50/70 p-3 rounded-2xl border border-amber-100 transition-all duration-500 text-center flex flex-col justify-center h-32 md:h-36">
+                <div class="text-[9px] font-bold text-amber-600 uppercase mb-1 text-left">Feature Learning Layer</div>
+                <div class="font-bold text-xs mb-2 text-slate-800 text-left">AI / Deep Learning</div>
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <svg id="nn-viz" class="w-full h-14 mx-auto" viewBox="0 0 120 80" preserveAspectRatio="xMidYMid meet">
                         <g id="nn-links"></g>
                         <g id="nn-nodes"></g>
                     </svg>
                 </div>
             </div>
 
-            <!-- Prediction Layer -->
-            <div id="stage-4" class="bg-rose-50 p-4 rounded-xl border border-rose-100 transition-all duration-500">
-                <div class="text-xs font-bold text-rose-600 uppercase mb-2">Prediction Layer</div>
-                <div class="font-semibold text-sm mb-3">Predictive Modeling</div>
-                <div class="space-y-3 mt-2">
-                    <div class="h-2 bg-rose-200 rounded-full overflow-hidden">
-                        <div id="pred-bar-1" class="h-full bg-rose-500 progress-bar" style="width: 0%"></div>
+            <!-- Stage 4 -->
+            <div id="stage-4" class="bg-rose-50/70 p-3 rounded-2xl border border-rose-100 transition-all duration-500 flex flex-col justify-center h-32 md:h-36">
+                <div class="text-[9px] font-bold text-rose-600 uppercase mb-1">Prediction Layer</div>
+                <div class="font-bold text-xs mb-2 text-slate-800">Predictive Modeling</div>
+                <div class="space-y-2">
+                    <div class="space-y-0.5">
+                        <div class="flex justify-between text-[8px] font-bold text-rose-900 uppercase"><span>Detection</span> <span id="p-det">0%</span></div>
+                        <div class="h-1 bg-rose-200 rounded-full overflow-hidden">
+                            <div id="pred-bar-1" class="h-full bg-rose-600 progress-bar" style="width: 0%"></div>
+                        </div>
                     </div>
-                    <div class="h-2 bg-rose-200 rounded-full overflow-hidden">
-                        <div id="pred-bar-2" class="h-full bg-rose-500 progress-bar" style="width: 0%"></div>
+                    <div class="space-y-0.5">
+                        <div class="flex justify-between text-[8px] font-bold text-rose-900 uppercase"><span>Survival</span> <span id="p-sur">0%</span></div>
+                        <div class="h-1 bg-rose-200 rounded-full overflow-hidden">
+                            <div id="pred-bar-2" class="h-full bg-rose-600 progress-bar" style="width: 0%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Clinical Impact Layer -->
-            <div id="stage-5" class="bg-purple-50 p-4 rounded-xl border border-purple-100 transition-all duration-500">
-                <div class="text-xs font-bold text-purple-600 uppercase mb-2">Clinical Impact</div>
-                <div class="font-semibold text-sm mb-3">Decision Support</div>
-                <div class="flex flex-col items-center justify-center h-24">
-                    <div id="report-icon" class="text-3xl opacity-20 transition-opacity duration-500">📋</div>
-                    <div class="text-[10px] text-purple-700 mt-2 text-center">Verified clinical report</div>
+            <!-- Stage 5 -->
+            <div id="stage-5" class="bg-purple-50/70 p-3 rounded-2xl border border-purple-100 transition-all duration-500 text-center flex flex-col justify-center h-32 md:h-36">
+                <div class="text-[9px] font-bold text-purple-600 uppercase mb-1 text-left">Clinical Impact Layer</div>
+                <div class="font-bold text-xs mb-2 text-slate-800 text-left">Improved Support</div>
+                <div class="flex-1 flex flex-col items-center justify-center">
+                    <div id="report-icon" class="text-3xl opacity-20 transition-all duration-500">📋</div>
                 </div>
             </div>
         </div>
 
-        <!-- Terminal & Results Area -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Lower Section: Reduced height -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-shrink-0">
             <!-- Console -->
-            <div class="bg-slate-900 rounded-xl p-5 shadow-inner">
-                <div class="flex items-center space-x-2 mb-4">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span class="text-slate-400 text-xs ml-2 font-mono">system.process_log</span>
+            <div class="bg-slate-900 rounded-2xl p-3 shadow-lg flex flex-col h-32 md:h-36">
+                <div class="flex items-center justify-between mb-1.5 flex-shrink-0 border-b border-slate-800 pb-1">
+                    <div class="flex space-x-1.5">
+                        <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
+                        <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span id="statusLabel" class="text-slate-500 text-[8px] font-mono uppercase tracking-widest">Idle</span>
                 </div>
-                <div id="console" class="console-text text-green-400 text-sm h-64 overflow-y-auto leading-relaxed">
-                    > System ready...<br>
-                    > Awaiting input signal...
+                <div id="console" class="console-text text-green-400 text-[10px] flex-1 overflow-y-auto leading-normal scrollbar-hide opacity-90">
+                    > System Standby.
                 </div>
-                <div class="mt-4 flex justify-between items-center">
-                    <button id="runBtn" onclick="startPipeline()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-colors flex items-center">
-                        <span id="btnText">Process Patient Scan</span>
-                        <svg id="loadingSpinner" class="hidden animate-spin ml-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <div class="mt-2 flex-shrink-0">
+                    <button id="runBtn" onclick="startPipeline()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 rounded-xl text-[10px] transition-all shadow-md shadow-blue-500/20 uppercase tracking-wide">
+                        Execute Cycle
                     </button>
-                    <span id="statusLabel" class="text-slate-500 text-xs font-mono uppercase tracking-widest">Idle</span>
                 </div>
             </div>
 
-            <!-- Results Card -->
-            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm relative overflow-hidden">
-                <div id="overlay" class="absolute inset-0 bg-white/80 backdrop-blur-[2px] z-10 flex items-center justify-center font-semibold text-slate-400">
-                    Results will appear here
+            <!-- Metrics Card -->
+            <div class="bg-white rounded-2xl p-3 border border-slate-200 shadow-lg relative overflow-hidden flex flex-col h-32 md:h-36">
+                <div id="overlay" class="absolute inset-0 bg-white/95 z-10 flex items-center justify-center font-bold text-slate-300 text-[9px] tracking-widest uppercase">
+                    Awaiting Signal
                 </div>
-                <h3 class="text-lg font-bold mb-4 border-b pb-2">Diagnostic Output</h3>
                 
-                <div class="space-y-6">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Early Lung Cancer Detection</span>
-                            <span id="val-detection" class="text-sm font-bold text-blue-600">--</span>
+                <div class="flex-1 flex flex-col justify-between">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="text-[7px] font-bold text-slate-400 uppercase tracking-tight">Detection</div>
+                            <div id="val-detection" class="text-lg font-black text-blue-600 leading-none">--</div>
+                            <div class="w-full bg-slate-200 rounded-full h-1 mt-1">
+                                <div id="res-bar-detection" class="bg-blue-600 h-1 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
                         </div>
-                        <div class="w-full bg-slate-100 rounded-full h-2.5">
-                            <div id="res-bar-detection" class="bg-blue-600 h-2.5 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="text-[7px] font-bold text-slate-400 uppercase tracking-tight">Survival</div>
+                            <div id="val-survival" class="text-lg font-black text-purple-600 leading-none">--</div>
+                            <div class="w-full bg-slate-200 rounded-full h-1 mt-1">
+                                <div id="res-bar-survival" class="bg-purple-600 h-1 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                            </div>
                         </div>
-                        <p class="text-[10px] text-slate-500 mt-1">Probability based on stable imaging features.</p>
                     </div>
 
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">5-Year Survival Prediction</span>
-                            <span id="val-survival" class="text-sm font-bold text-purple-600">--</span>
-                        </div>
-                        <div class="w-full bg-slate-100 rounded-full h-2.5">
-                            <div id="res-bar-survival" class="bg-purple-600 h-2.5 rounded-full transition-all duration-1000" style="width: 0%"></div>
-                        </div>
-                        <p class="text-[10px] text-slate-500 mt-1">Estimated prognostic outcome based on learned representation.</p>
-                    </div>
-
-                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
-                        <div class="text-[10px] font-bold text-blue-800 uppercase mb-1">Clinical Insight</div>
-                        <p id="insight-text" class="text-xs text-blue-700 italic">No analysis performed yet.</p>
+                    <div class="bg-blue-50/50 p-2 rounded-xl border border-blue-100 mt-1">
+                        <div class="text-[7px] font-bold text-blue-800 uppercase mb-0.5 tracking-tight">AI Clinical Insight</div>
+                        <p id="insight-text" class="text-[9px] text-blue-700 italic leading-tight">Ready for analysis.</p>
                     </div>
                 </div>
             </div>
@@ -175,148 +232,112 @@
     <script>
         const logEl = document.getElementById('console');
         const btn = document.getElementById('runBtn');
-        const btnText = document.getElementById('btnText');
-        const spinner = document.getElementById('loadingSpinner');
         const statusLabel = document.getElementById('statusLabel');
 
-        // Neural Network Visualization Data
-        const nodes = [];
         const layers = [3, 4, 4, 2];
         const layerGap = 35;
         const nodeGap = 20;
+        const nodes = [];
 
         function initNN() {
             const nodeContainer = document.getElementById('nn-nodes');
             const linkContainer = document.getElementById('nn-links');
-            
-            let htmlNodes = '';
-            let htmlLinks = '';
-
+            let nH = ''; let lH = '';
             layers.forEach((count, lIdx) => {
                 const x = 10 + (lIdx * layerGap);
                 const startY = (80 - (count - 1) * nodeGap) / 2;
-                
                 for(let nIdx = 0; nIdx < count; nIdx++) {
                     const y = startY + (nIdx * nodeGap);
                     nodes.push({x, y, layer: lIdx});
-                    htmlNodes += `<circle cx="${x}" cy="${y}" r="3" class="node" id="node-${lIdx}-${nIdx}" />`;
-                    
+                    nH += `<circle cx="${x}" cy="${y}" r="2.5" class="node" id="node-${lIdx}-${nIdx}" />`;
                     if(lIdx > 0) {
-                        const prevLayerNodes = nodes.filter(n => n.layer === lIdx - 1);
-                        prevLayerNodes.forEach((prevNode, pIdx) => {
-                            htmlLinks += `<line x1="${prevNode.x}" y1="${prevNode.y}" x2="${x}" y2="${y}" class="link" id="link-${lIdx-1}-${pIdx}-to-${lIdx}-${nIdx}" />`;
+                        nodes.filter(n => n.layer === lIdx - 1).forEach((p, pIdx) => {
+                            lH += `<line x1="${p.x}" y1="${p.y}" x2="${x}" y2="${y}" class="link" id="link-${lIdx-1}-${pIdx}-to-${lIdx}-${nIdx}" />`;
                         });
                     }
                 }
             });
-            nodeContainer.innerHTML = htmlNodes;
-            linkContainer.innerHTML = htmlLinks;
+            nodeContainer.innerHTML = nH; linkContainer.innerHTML = lH;
         }
-
         initNN();
 
-        function addLog(text, color = "text-green-400") {
-            const span = document.createElement('div');
-            span.className = color;
-            span.innerHTML = `> ${text}`;
-            logEl.appendChild(span);
+        function addLog(t, c = "text-green-400") {
+            const d = document.createElement('div');
+            d.className = c;
+            d.innerHTML = `> ${t}`;
+            logEl.appendChild(d);
             logEl.scrollTop = logEl.scrollHeight;
         }
 
-        async function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+        async function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 
         async function startPipeline() {
-            if (btn.disabled) return;
-            
-            // UI Reset
+            if (btn.disabled && statusLabel.innerText !== "Looping") return;
             btn.disabled = true;
-            spinner.classList.remove('hidden');
-            btnText.innerText = "Processing...";
             statusLabel.innerText = "Active";
             document.getElementById('overlay').classList.remove('hidden');
-            logEl.innerHTML = "> Initiating Diagnostic sequence...";
+            document.getElementById('report-icon').classList.remove('opacity-100');
+            document.getElementById('report-icon').classList.add('opacity-20');
+            document.getElementById('visual-slice').classList.remove('crisp');
+            logEl.innerHTML = "";
             
-            // Clear bars and highlights
             document.querySelectorAll('.stage').forEach(s => s.classList.remove('active-stage'));
-            document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.link').forEach(l => l.classList.remove('active'));
-            ['pred-bar-1', 'pred-bar-2', 'res-bar-detection', 'res-bar-survival'].forEach(id => {
-                document.getElementById(id).style.width = '0%';
-            });
+            document.querySelectorAll('.node, .link').forEach(n => n.classList.remove('active'));
+            ['pred-bar-1', 'pred-bar-2', 'res-bar-detection', 'res-bar-survival'].forEach(id => document.getElementById(id).style.width = '0%');
 
-            // STAGE 1: INPUT
+            // Stages
             document.getElementById('stage-1').classList.add('active-stage');
-            addLog("Ingesting heterogeneous CT Imaging Data...", "text-blue-400");
-            addLog("Detecting scanner signatures: [Siemens, GE, Philips detected]", "text-blue-300");
-            await wait(1500);
-
-            // STAGE 2: PREPROCESS
-            document.getElementById('stage-1').classList.remove('active-stage');
-            document.getElementById('stage-2').classList.add('active-stage');
-            addLog("Executing CT Image Standardization...", "text-emerald-400");
-            addLog("Harmonizing Hounsfield Units (HU) across scanners...", "text-emerald-300");
-            addLog("Resampling voxel spacing to 1.0mm isotropic...", "text-emerald-300");
-            await wait(2000);
-
-            // STAGE 3: FEATURE LEARNING
-            document.getElementById('stage-2').classList.remove('active-stage');
-            document.getElementById('stage-3').classList.add('active-stage');
-            addLog("Deep Learning Representation Learning initiated...", "text-amber-400");
-            
-            // Animate NN
-            for(let l = 0; l < layers.length; l++) {
-                addLog(`Processing Layer ${l+1}...`, "text-amber-300");
-                document.querySelectorAll(`.node[id^="node-${l}"]`).forEach(n => n.classList.add('active'));
-                if(l < layers.length - 1) {
-                   document.querySelectorAll(`.link[id^="link-${l}"]`).forEach(link => link.classList.add('active'));
-                }
-                await wait(600);
-            }
-            addLog("Stable imaging features extracted.", "text-amber-500 font-bold");
-
-            // STAGE 4: PREDICTION
-            document.getElementById('stage-3').classList.remove('active-stage');
-            document.getElementById('stage-4').classList.add('active-stage');
-            addLog("Running Predictive Modeling...", "text-rose-400");
-            
-            // Generate some random clinical-style results
-            const detectionVal = Math.floor(Math.random() * 40) + 60; // 60-99
-            const survivalVal = Math.floor(Math.random() * 50) + 40;  // 40-90
-            
-            document.getElementById('pred-bar-1').style.width = detectionVal + '%';
-            await wait(400);
-            document.getElementById('pred-bar-2').style.width = survivalVal + '%';
+            addLog("Ingesting data.", "text-blue-400");
             await wait(800);
 
-            // STAGE 5: CLINICAL IMPACT
+            document.getElementById('stage-1').classList.remove('active-stage');
+            document.getElementById('stage-2').classList.add('active-stage');
+            addLog("Standardizing Kernels.", "text-emerald-400");
+            await wait(400);
+            document.getElementById('visual-slice').classList.add('crisp');
+            await wait(600);
+
+            document.getElementById('stage-2').classList.remove('active-stage');
+            document.getElementById('stage-3').classList.add('active-stage');
+            addLog("Learning features.", "text-amber-400");
+            for(let l = 0; l < layers.length; l++) {
+                document.querySelectorAll(`.node[id^="node-${l}"]`).forEach(n => n.classList.add('active'));
+                if(l < layers.length - 1) document.querySelectorAll(`.link[id^="link-${l}"]`).forEach(link => link.classList.add('active'));
+                await wait(200);
+            }
+
+            document.getElementById('stage-3').classList.remove('active-stage');
+            document.getElementById('stage-4').classList.add('active-stage');
+            addLog("Modeling risk.", "text-rose-400");
+            const dV = Math.floor(Math.random() * 30) + 65;
+            const sV = Math.floor(Math.random() * 40) + 50;
+            document.getElementById('pred-bar-1').style.width = dV + '%';
+            document.getElementById('p-det').innerText = dV + '%';
+            await wait(400);
+            document.getElementById('pred-bar-2').style.width = sV + '%';
+            document.getElementById('p-sur').innerText = sV + '%';
+            await wait(600);
+
             document.getElementById('stage-4').classList.remove('active-stage');
             document.getElementById('stage-5').classList.add('active-stage');
             document.getElementById('report-icon').classList.replace('opacity-20', 'opacity-100');
-            addLog("Generating Clinical Decision Support report...", "text-purple-400");
-            await wait(1000);
+            addLog("Report ready.", "text-purple-400");
+            await wait(600);
 
-            // FINAL RESULTS
             document.getElementById('overlay').classList.add('hidden');
-            document.getElementById('res-bar-detection').style.width = detectionVal + '%';
-            document.getElementById('res-bar-survival').style.width = survivalVal + '%';
-            document.getElementById('val-detection').innerText = detectionVal + '%';
-            document.getElementById('val-survival').innerText = survivalVal + '%';
+            document.getElementById('res-bar-detection').style.width = dV + '%';
+            document.getElementById('res-bar-survival').style.width = sV + '%';
+            document.getElementById('val-detection').innerText = dV + '%';
+            document.getElementById('val-survival').innerText = sV + '%';
+            document.getElementById('insight-text').innerText = dV > 82 ? "Critical malignancy risk." : "Moderate risk profile.";
             
-            let insight = "";
-            if (detectionVal > 85) insight = "High probability of malignancy detected. Recommend immediate biopsy and multidisciplinary consultation.";
-            else if (detectionVal > 70) insight = "Suspect lesion identified. Follow-up CT recommended in 3 months.";
-            else insight = "Low risk profile detected. Continue standard screening protocol.";
-
-            document.getElementById('insight-text').innerText = insight;
-            
-            addLog("Pipeline complete. Findings logged to hospital PACS.", "text-white font-bold bg-blue-900 px-1 inline-block");
-            
-            // Reset Button
             btn.disabled = false;
-            spinner.classList.add('hidden');
-            btnText.innerText = "Run New Scan";
-            statusLabel.innerText = "Finished";
+            statusLabel.innerText = "Looping";
+            await wait(5000);
+            startPipeline();
         }
+
+        window.onload = startPipeline;
     </script>
 </body>
 </html>
