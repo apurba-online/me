@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="icons.css">
 <title>Md Shifatul Ahsan Apurba | Generative AI & Imaging</title>
+<link rel="stylesheet" href="spatial.css">
+<script src="spatial.js" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -27,8 +29,12 @@
 
 <main>
 <section class="wrap hero">
-  <img class="portrait" src="assets/img/profile/apurba-profile.webp" alt="Md Shifatul Ahsan Apurba" width="448" height="448" decoding="async" fetchpriority="high">
-  <div>
+  <div class="spatial-stage">
+    <canvas id="research-space" tabindex="0" role="img" aria-label="Interactive abstract 3D lattice. Drag or use arrow keys to rotate; Home resets the view.">Interactive three-dimensional lattice connecting generative imaging, representation learning, and predictive AI.</canvas>
+    <div class="profile-chip"><img class="portrait" src="assets/img/profile/apurba-profile.webp" alt="Md Shifatul Ahsan Apurba" width="448" height="448" decoding="async" fetchpriority="high"><p>Apurba Ahsan<small>AI &amp; Imaging Research</small></p></div>
+    <div class="scene-caption"><span>Drag to explore · Arrow keys to rotate</span><button class="motion-button" id="motion-toggle" type="button" aria-pressed="true">Pause motion</button></div>
+  </div>
+  <div class="hero-content">
     <div class="kicker">PhD Candidate · UAB</div>
     <h1>Md Shifatul Ahsan Apurba</h1>
     <p class="hero-role">I work on <strong>generative AI, computer vision, and imaging</strong>, with a background in software engineering, data science, and applied AI.</p>
